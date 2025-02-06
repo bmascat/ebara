@@ -2,6 +2,11 @@
 
 import os
 from supabase import create_client, Client
+from dotenv import load_dotenv
+
+# Specify the full path to the .env file
+dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+load_dotenv(dotenv_path)
 
 # Configura tus variables de entorno con la URL y la API KEY de Supabase
 SUPABASE_URL = os.getenv("SUPABASE_URL")
