@@ -3,7 +3,7 @@
 import numpy as np
 import faiss
 from sentence_transformers import SentenceTransformer
-from sample_data import articles
+from src.sample_data import articles
 
 # Cargamos el modelo de embeddings (puedes cambiarlo si lo deseas)
 model = SentenceTransformer('all-MiniLM-L6-v2')

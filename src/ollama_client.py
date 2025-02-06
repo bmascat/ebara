@@ -10,17 +10,15 @@ client = Client(host=OLLAMA_HOST)
 def generate_response(prompt: str) -> str:
     """
     Genera una respuesta usando el modelo de Ollama.
-    Por defecto usa el modelo 'llama2', pero puedes especificar otros como 'mistral' o 'gemma'
+    Por defecto usa el modelo 'llama3.2', pero puedes especificar otros como 'mistral' o 'gemma'
     """
     try:
         # Genera la respuesta usando el modelo
-        response = client.generate(
-            model='llama2',  # o el modelo que prefieras
-            prompt=prompt,
-            max_tokens=200,
-            temperature=0.7
-        )
-        return response['response']
+        response = client.chat(
+            model='llama3.2',  # o el modelo que prefieras
+            messages=[{'role': 'user', 'content': f'{prompt}'}])
+        
+        return response.message.content
     except Exception as e:
         print(f"Error al generar respuesta con Ollama: {str(e)}")
         return "Lo siento, hubo un error al generar la respuesta."
