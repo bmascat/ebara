@@ -1,4 +1,4 @@
 from model_manager import ModelManager
-from pubmed_retriever import Retriever
+from pubmed_retriever import PubMedRetriever
 from embedding_processor import EmbeddingProcessor
 from database_manager import DatabaseManager
