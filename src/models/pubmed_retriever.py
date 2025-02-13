@@ -6,7 +6,7 @@ class PubMedRetriever:
     Utiliza PyMed para conectarse a la API de PubMed.
     """
 
-    def __init__(self, max_results=5):
+    def __init__(self, max_results=20):
         self.pubmed = PubMed()
         self.max_results = max_results
 

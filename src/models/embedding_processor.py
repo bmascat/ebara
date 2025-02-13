@@ -14,8 +14,26 @@ class EmbeddingProcessor:
         self.docs.extend(chunks)
         embeddings = self.embedder.encode(chunks)
         self.index.add(np.array(embeddings, dtype=np.float32))
+   
+    def process_abstracts(self, abstracts: list):
+        """
+        Procesa una lista de abstracts, calcula sus embeddings y los añade al índice FAISS.
+        
+        Args:
+            abstracts: Lista de strings conteniendo los abstracts a procesar
+        """
+        if not abstracts:
+            return
+            
+        # Calcular embeddings de todos los abstracts
+        embeddings = self.embedder.encode(abstracts, convert_to_numpy=True)
+        embeddings = np.array(embeddings, dtype=np.float32)
+        
+        # Añadir los abstracts y sus embeddings
+        self.docs.extend(abstracts)
+        self.index.add(embeddings)
     
-    def retrieve_relevant_chunks(self, query: str, top_k=5):
+    def retrieve_relevant_docs(self, query: str, top_k=5):
         """Encuentra los fragmentos más relevantes en FAISS."""
         query_embedding = self.embedder.encode([query])
         _, indices = self.index.search(np.array(query_embedding, dtype=np.float32), top_k)
