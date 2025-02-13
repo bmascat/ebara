@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-from models import ModelManager, EmbeddingProcessor, PubMedRetriever, DatabaseManager
+from src.models import ModelManager, EmbeddingProcessor, PubMedRetriever, DatabaseManager
 from fastapi.concurrency import run_in_threadpool
 
 app = FastAPI()
@@ -52,7 +52,7 @@ async def handle_query(query: QueryRequest):
         # Registrar la consulta en la base de datos utilizando DatabaseManager
         db_manager = DatabaseManager()
         db_manager.create_table()
-        
+
         await run_in_threadpool(db_manager.save_to_db, query.question, response_text, context)
     
         return {"response": response_text, "references": [doc['doi'] for doc in relevant_docs]}
