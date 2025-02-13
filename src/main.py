@@ -2,9 +2,7 @@
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-from src.embedding_utils import compute_embedding, search_vector_db
-from src.ollama_client import generate_response
-from src.supabase_client import log_query_response
+from models import ModelManager, EmbeddingProcessor, PubMedRetriever, DatabaseManager
 from fastapi.concurrency import run_in_threadpool
 
 app = FastAPI()
@@ -16,24 +14,47 @@ class QueryRequest(BaseModel):
 async def handle_query(query: QueryRequest):
     try:
         # Calcular embedding en un thread separado
-        query_embedding = await run_in_threadpool(compute_embedding, query.question)
-        relevant_articles = await run_in_threadpool(search_vector_db, query_embedding, 3)
+        # Inicializar los componentes necesarios
+        model_manager = ModelManager()
+        embedding_processor = EmbeddingProcessor()
+        pubmed_retriever = PubMedRetriever()
         
-        if not relevant_articles:
+        # Generar consulta optimizada para PubMed
+        pubmed_query = await run_in_threadpool(model_manager.generate_advanced_query, query.question)
+        
+        # Obtener artículos de PubMed
+        articles = await run_in_threadpool(pubmed_retriever.fetch_articles, pubmed_query)
+        
+        # Procesar los artículos con el embedding processor
+        await run_in_threadpool(embedding_processor.process_abstracts, articles)
+        
+        # Obtener chunks relevantes
+        relevant_docs = await run_in_threadpool(
+            embedding_processor.retrieve_relevant_docs, 
+            query.question
+        )
+        
+        if not relevant_docs:
             raise HTTPException(status_code=404, detail="No se encontraron artículos relevantes.")
         
-        prompt = f"Pregunta: {query.question}\n\nDocumentos relevantes:\n"
-        for article in relevant_articles:
-            prompt += (
-                f"- {article['title']} (DOI: {article['doi']})\n"
-                f"  Abstract: {article['abstract']}\n\n"
+        # Crear un contexto formateado con la información completa de cada artículo
+        context = []
+        for doc in relevant_docs:
+            context.append(
+                f"""- {doc['title']} (DOI: {doc['doi']})
+                      Abstract: {doc['abstract']}"""
             )
         
-        # Usar la nueva función de generación
-        response_text = await run_in_threadpool(generate_response, prompt)
+        # Generar la respuesta utilizando el método del ModelManager
+        # Se asume que generate_response recibe la pregunta y el contexto (lista de strings)
+        response_text = await run_in_threadpool(model_manager.generate_response, query.question, context)
         
-        await run_in_threadpool(log_query_response, query.question, response_text, relevant_articles)
+        # Registrar la consulta en la base de datos utilizando DatabaseManager
+        db_manager = DatabaseManager()
+        db_manager.create_table()
+        
+        await run_in_threadpool(db_manager.save_to_db, query.question, response_text, context)
     
-        return {"response": response_text, "references": [article['doi'] for article in relevant_articles]}
+        return {"response": response_text, "references": [doc['doi'] for doc in relevant_docs]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
