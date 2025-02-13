@@ -14,5 +14,5 @@ class ModelManager:
 
     def generate_response(self, query: str, context: list) -> str:
         """Genera una respuesta basada en los fragmentos recuperados."""
-        final_prompt = f"Using the following information, answer: {query}\n\n" + "\n".join(context)
+        final_prompt = f"Using the following information: {context}, answer the following question: {query}"
         return self.generator(final_prompt, max_length=300, do_sample=True)[0]['generated_text']
