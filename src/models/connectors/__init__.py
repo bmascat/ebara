@@ -1,17 +1,10 @@
-from abc import ABC, abstractmethod
+
 import ollama
 import openai
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import torch
 
-class LLMConnector(ABC):
-    """Clase base abstracta para conectores de LLM"""
-    
-    @abstractmethod
-    def generate_text(self, prompt: str, max_length: int = 300) -> str:
-        
-        """Método abstracto para generar texto"""
-        pass
+
 
 class HuggingFaceConnector(LLMConnector):
     """Conector para modelos de Hugging Face"""
