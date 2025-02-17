@@ -2,7 +2,7 @@ from models import ModelManager, PubMedRetriever, EmbeddingProcessor, DatabaseMa
 
 def main():
     # Inicializar componentes
-    model_manager = ModelManager(model_name="deepseek-R1", connector_type="ollama")
+    model_manager = ModelManager(connector_type="ollama", model_name="llama3.2",)
     pubmed_retriever = PubMedRetriever()
     embedding_processor = EmbeddingProcessor()
     db_manager = DatabaseManager()
@@ -24,14 +24,21 @@ def main():
             # Generar consulta optimizada para PubMed
             pubmed_query = model_manager.generate_advanced_query(question)
             
+            print(f"Consulta optimizada: {pubmed_query}")
+
             # Obtener artículos de PubMed
             articles = pubmed_retriever.fetch_articles(pubmed_query)
             
+            print(f"Artículos encontrados: {len(articles)}")
             # Procesar los artículos
             embedding_processor.process_abstracts(articles)
             
+            print("Procesando artículos...")
+            
             # Obtener documentos relevantes
             relevant_docs = embedding_processor.retrieve_relevant_docs(question)
+            
+            print(f"Documentos relevantes encontrados: {len(relevant_docs)}")
             
             if not relevant_docs:
                 print("No se encontraron artículos relevantes.")
@@ -44,11 +51,17 @@ def main():
                     f"- {doc['title']} (DOI: {doc['doi']})\n  Abstract: {doc['abstract']}"
                 )
             
+            print("Generando respuesta...")
+            
             # Generar respuesta
             response = model_manager.generate_response(question, context)
             
+            print("Guardando en base de datos...")
+            
             # Guardar en base de datos
             db_manager.save_to_db(question, response, context)
+            
+            print("Mostrando resultados...")
             
             # Mostrar resultados
             print("\nRespuesta:")
