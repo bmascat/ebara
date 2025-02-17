@@ -1,9 +1,9 @@
 
 import openai
-from connectors import LLMConnector
+from .LLMConnector import LLMConnector
 
-class LMStudioConnector(LLMConnector):
-    """Conector para modelos vía LM Studio API compatible con OpenAI"""
+class OpenAIConnector(LLMConnector):
+    """Conector para modelos vía OpenAI API"""
     
     def __init__(self, base_url: str = "http://localhost:1234/v1", api_key: str = "not-needed"):
         self.client = openai.OpenAI(

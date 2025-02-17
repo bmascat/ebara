@@ -1,9 +1,9 @@
-from connectors import LLMConnectorFactory
+from .connectors import LLMConnectorFactory
 
 class ModelManager:
     """Gestor de modelos que soporta múltiples conectores de LLM"""
     
-    def __init__(self, connector_type: str = "ollama", **kwargs):
+    def __init__(self, model_name: str = "llama2", connector_type: str = "ollama", **kwargs):
         """
         Inicializa el ModelManager con el conector especificado
         
@@ -11,7 +11,7 @@ class ModelManager:
             connector_type: String que indica el conector a usar ("huggingface", "ollama", "lmstudio")
             **kwargs: Argumentos adicionales para el conector específico
         """
-        self.llm = LLMConnectorFactory.get_connector(connector_type, **kwargs)
+        self.llm = LLMConnectorFactory.get_connector(connector_type, model_name, **kwargs)
     
     def generate_advanced_query(self, user_question: str) -> str:
         """Convierte la pregunta del usuario en una consulta avanzada de PubMed."""

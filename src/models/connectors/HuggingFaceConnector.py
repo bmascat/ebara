@@ -1,4 +1,4 @@
-from connectors import LLMConnector
+from .LLMConnector import LLMConnector
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import torch
 

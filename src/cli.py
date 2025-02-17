@@ -2,7 +2,7 @@ from models import ModelManager, PubMedRetriever, EmbeddingProcessor, DatabaseMa
 
 def main():
     # Inicializar componentes
-    model_manager = ModelManager()
+    model_manager = ModelManager(model_name="deepseek-R1", connector_type="ollama")
     pubmed_retriever = PubMedRetriever()
     embedding_processor = EmbeddingProcessor()
     db_manager = DatabaseManager()
