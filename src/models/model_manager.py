@@ -2,7 +2,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import torch
 
 class ModelManager:
-    def __init__(self, model_name="meta-llama/Llama-3.3-70B-Instruct"):
+    def __init__(self, model_name="mistralai/Mistral-7B-Instruct-v0.2"):
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16, device_map="auto")
         self.generator = pipeline("text-generation", model=self.model, tokenizer=self.tokenizer, device=0)
