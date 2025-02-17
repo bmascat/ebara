@@ -7,7 +7,7 @@ class LLMConnectorFactory:
     """Fábrica de conectores LLM"""
     
     @staticmethod
-    def get_connector(connector_type: str, model_name: str, **kwargs) -> LLMConnector:
+    def get_connector(connector_type: str, **kwargs) -> LLMConnector:
         """
         Crea y retorna una instancia del conector especificado
         
@@ -27,4 +27,4 @@ class LLMConnectorFactory:
         if connector_type not in connectors:
             raise ValueError(f"Conector no soportado. Opciones válidas: {list(connectors.keys())}")
             
-        return connectors[connector_type](model_name, **kwargs)
+        return connectors[connector_type](**kwargs)

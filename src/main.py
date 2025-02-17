@@ -15,7 +15,7 @@ async def handle_query(query: QueryRequest):
     try:
         # Calcular embedding en un thread separado
         # Inicializar los componentes necesarios
-        model_manager = ModelManager(model_name="deepseek-R1", connector_type="ollama")
+        model_manager = ModelManager(connector_type="ollama", model_name="deepseek-R1")
         embedding_processor = EmbeddingProcessor()
         pubmed_retriever = PubMedRetriever()
         
