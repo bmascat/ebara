@@ -18,8 +18,8 @@ def test_fetch_articles_success(mock_get, europepmc_retriever):
     mock_response.json.return_value = {
         'resultList': {
             'result': [
-                {'abstractText': 'Test abstract 1'},
-                {'abstractText': 'Test abstract 2'}
+                {'title': 'Test title 1'},
+                {'title': 'Test title 2'}
             ]
         }
     }
@@ -30,8 +30,8 @@ def test_fetch_articles_success(mock_get, europepmc_retriever):
     
     # Verificar
     assert len(results) == 2
-    assert results[0] == "Test abstract 1"
-    assert results[1] == "Test abstract 2"
+    assert results[0] == "Test title 1"
+    assert results[1] == "Test title 2"
     
     # Verificar llamada a la API
     mock_get.assert_called_once()
@@ -57,7 +57,7 @@ def test_fetch_articles_missing_abstract(mock_get, europepmc_retriever):
         'resultList': {
             'result': [
                 {'title': 'Test title'},  # Sin abstractText
-                {'abstractText': 'Test abstract 2'}
+                {'title': 'Test title 2'}
             ]
         }
     }
@@ -67,8 +67,8 @@ def test_fetch_articles_missing_abstract(mock_get, europepmc_retriever):
     results = europepmc_retriever.fetch_articles("test query")
     
     # Verificar
-    assert len(results) == 1
-    assert results[0] == "Test abstract 2"
+    assert len(results) == 2
+    assert results[0] == "Test title"
 
 @pytest.mark.integration  # Marca este test como test de integración
 # @pytest.mark.skip(reason="Solo ejecutar cuando se necesite probar la integración real")  # Skip por defecto
