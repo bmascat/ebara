@@ -33,10 +33,10 @@ class EuropePMCRetriever(BaseRetriever):
         response.raise_for_status()
         
         data = response.json()
-        abstracts = []
+        titles = [] 
         
         for result in data.get('resultList', {}).get('result', []):
-            if 'abstractText' in result:
-                abstracts.append(result['abstractText'])
+            if 'title' in result:
+                titles.append(result['title'])
                 
-        return abstracts
+        return titles

@@ -69,3 +69,18 @@ def test_fetch_articles_missing_abstract(mock_get, europepmc_retriever):
     # Verificar
     assert len(results) == 1
     assert results[0] == "Test abstract 2"
+
+@pytest.mark.integration  # Marca este test como test de integración
+# @pytest.mark.skip(reason="Solo ejecutar cuando se necesite probar la integración real")  # Skip por defecto
+def test_real_api_call():
+    # Inicializar el retriever
+    retriever = EuropePMCRetriever(max_results=3)
+    
+    # Realizar una búsqueda real
+    query = "cancer immunotherapy"
+    results = retriever.fetch_articles(query)
+    
+    # Verificaciones básicas
+    assert len(results) > 0
+    assert all(isinstance(title, str) for title in results)
+    assert all(len(title) > 0 for title in results)
