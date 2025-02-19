@@ -1,4 +1,5 @@
-from models import ModelManager, PubMedRetriever, EmbeddingProcessor, DatabaseManager
+from models import ModelManager, EmbeddingProcessor, DatabaseManager
+from models.retrievers import PubMedRetriever
 
 def main():
     # Inicializar componentes
