@@ -14,17 +14,21 @@ class PubMedRetriever(BaseRetriever):
 
     def fetch_articles(self, query: str) -> List[str]:
         """
-        Obtiene los primeros 'max_results' artículos de PubMed según la consulta.
+        Obtains the first 'max_results' articles from PubMed according to the query.
         
         Args:
-            query (str): Query de búsqueda
+            query (str): search query
             
         Returns:
-            List[str]: Lista de abstracts de los artículos
+            List[dict]: List of objects containing doi, title, and abstract of the articles
         """
         results = self.pubmed.query(query, max_results=self.max_results)
-        abstracts = []
+        articles = []
         for article in results:
             if article.abstract:
-                abstracts.append(article.abstract)
-        return abstracts
+                articles.append({
+                    'doi': article.doi,
+                    'title': article.title,
+                    'abstract': article.abstract
+                })
+        return articles
