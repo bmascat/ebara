@@ -14,9 +14,15 @@ def test_init(pubmed_retriever):
 def test_fetch_articles_success(mock_query, pubmed_retriever):
     # Preparar los datos mock
     article1 = MagicMock()
+    article1.doi = "10.1000/xyz123"
+    article1.title = "Test title 1"
     article1.abstract = "Test abstract 1"
+    
     article2 = MagicMock()
+    article2.doi = "10.1000/xyz456"
+    article2.title = "Test title 2"
     article2.abstract = "Test abstract 2"
+    
     mock_query.return_value = [article1, article2]
     
     # Ejecutar
@@ -24,14 +30,16 @@ def test_fetch_articles_success(mock_query, pubmed_retriever):
     
     # Verificar
     assert len(results) == 2
-    assert results[0] == "Test abstract 1"
-    assert results[1] == "Test abstract 2"
+    assert results[0] == {'doi': "10.1000/xyz123", 'title': "Test title 1", 'abstract': "Test abstract 1"}
+    assert results[1] == {'doi': "10.1000/xyz456", 'title': "Test title 2", 'abstract': "Test abstract 2"}
     mock_query.assert_called_once_with("test query", max_results=2)
 
 @patch('pymed.PubMed.query')
 def test_fetch_articles_no_abstract(mock_query, pubmed_retriever):
     # Preparar artículo sin abstract
     article = MagicMock()
+    article.doi = "10.1000/xyz789"
+    article.title = "Test title"
     article.abstract = None
     mock_query.return_value = [article]
     
@@ -61,8 +69,8 @@ def test_real_pubmed_api_call():
     
     # Verificaciones
     assert len(results) > 0
-    assert all(isinstance(abstract, str) for abstract in results)
-    assert all(len(abstract) > 0 for abstract in results)
+    assert all(isinstance(result['abstract'], str) for result in results)
+    assert all(len(result['abstract']) > 0 for result in results)
     
     # Imprimir primer resultado para inspección manual
-    print(f"\nPrimer abstract encontrado:\n{results[0][:200]}...")
+    print(f"\nPrimer articulo encontrado:\n{results[0]}...")

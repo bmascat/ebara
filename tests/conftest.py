@@ -2,10 +2,10 @@ import pytest
 import sys
 import os
 
-# Añadir el directorio raíz del proyecto al PYTHONPATH
+# add the root directory of the project to the PYTHONPATH
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-# Fixtures compartidos para todos los tests
+# Shared fixtures for all tests
 @pytest.fixture
 def sample_abstract():
     return "This is a test abstract for medical research."
