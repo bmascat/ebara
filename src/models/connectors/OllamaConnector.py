@@ -2,7 +2,7 @@ import ollama
 from .LLMConnector import LLMConnector
 
 class OllamaConnector(LLMConnector):
-    """Conector para modelos locales via Ollama"""
+    """Local connector for models via Ollama"""
     
     def __init__(self, model_name: str = "llama3.2"):
         self.model = model_name

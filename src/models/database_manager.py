@@ -6,7 +6,7 @@ class DatabaseManager:
         self.create_table()
     
     def create_table(self):
-        """Crea la tabla en la base de datos SQLite si no existe."""
+        """Creates the table in the SQLite database if it does not exist."""
         cursor = self.conn.cursor()
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS responses (
@@ -19,7 +19,7 @@ class DatabaseManager:
         self.conn.commit()
     
     def save_to_db(self, query: str, response: str, context: list):
-        """Guarda la consulta, respuesta y contexto en SQLite."""
+        """Saves the query, response and context in SQLite."""
         cursor = self.conn.cursor()
         cursor.execute("INSERT INTO responses (query, response, context) VALUES (?, ?, ?)",
                        (query, response, "\n".join(context)))

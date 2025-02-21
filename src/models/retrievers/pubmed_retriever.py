@@ -4,8 +4,8 @@ from typing import List
 
 class PubMedRetriever(BaseRetriever):
     """
-    Retriever para la base de datos PubMed.
-    Utiliza PyMed para conectarse a la API de PubMed.
+    PubMedRetriever for the PubMed database.
+    Uses PyMed to connect to the PubMed API.
     """
 
     def __init__(self, max_results: int = 20):

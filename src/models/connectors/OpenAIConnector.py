@@ -3,7 +3,7 @@ import openai
 from .LLMConnector import LLMConnector
 
 class OpenAIConnector(LLMConnector):
-    """Conector para modelos vía OpenAI API"""
+    """OpenAI Connector for models"""
     
     def __init__(self, base_url: str = "http://localhost:1234/v1", api_key: str = "not-needed"):
         self.client = openai.OpenAI(

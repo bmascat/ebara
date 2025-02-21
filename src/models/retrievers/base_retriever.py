@@ -3,8 +3,8 @@ from typing import List
 
 class BaseRetriever(ABC):
     """
-    Clase abstracta base para los retrievers de bases de datos científicas.
-    Define la interfaz común que todos los retrievers deben implementar.
+    Base abstract class for scientific databases retrievers.
+    Defines the common interface that all retrievers must implement.
     """
 
     def __init__(self, max_results: int = 20):
@@ -13,12 +13,12 @@ class BaseRetriever(ABC):
     @abstractmethod
     def fetch_articles(self, query: str) -> List[str]:
         """
-        Método abstracto para obtener artículos de una base de datos.
+        Abstract method to obtain articles from a database.
         
         Args:
-            query (str): Query de búsqueda
+            query (str): Search query
             
         Returns:
-            List[str]: Lista de abstracts de los artículos encontrados
+            List[str]: List of abstracts of the found articles
         """
         pass
