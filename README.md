@@ -32,7 +32,7 @@ To use the CLI version of the assistant, run:
 python src/cli.py
 ```
 
-You will be prompted to enter your question about diseases, treatments, or pharmaceuticals. Type your question and press Enter. To exit, type `salir`.
+You will be prompted to enter your question about diseases, treatments, or pharmaceuticals. Type your question and press Enter. To exit, type `exit`.
 
 ### Web Interface
 
@@ -72,10 +72,11 @@ For questions or support, please contact [your-email@example.com].
 
 ### Code References
 
-- CLI Implementation: `src/cli.py` (startLine: 4, endLine: 78)
-- Streamlit Web Interface: `src/streamlit_app.py` (startLine: 1, endLine: 27)
-- Model Manager and Query Generation: `src/models/model_manager.py` (startLine: 3, endLine: 49)
-- Database Management: `src/models/database_manager.py` (startLine: 3, endLine: 26)
-- PubMed Article Retrieval: `src/models/retrievers/pubmed_retriever.py` (startLine: 5, endLine: 30)
+- CLI Implementation: `src/cli.py`
+- Streamlit Web Interface: `src/streamlit_app.py`
+- FastAPI Endpoint Implementation: `src/main.py`
+- Model Manager and Query Generation: `src/models/model_manager.py`
+- Embedding Processing: `src/models/embedding_processor.py`
+- Database Management: `src/models/database_manager.py`
 
 This documentation provides a comprehensive overview of the software, including how to install, use, and contribute to it. Adjust the contact information and repository URL as needed.
