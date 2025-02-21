@@ -41,8 +41,16 @@ The assistant also provides a web interface using Streamlit. To start the web se
 ```bash
 streamlit run src/streamlit_app.py
 ```
-
 Open your web browser and navigate to `http://localhost:8501` to access the interface.
+
+### FastAPI Endpoint
+
+To start the FastAPI endpoint, run:
+
+```bash
+uvicorn src.main:app --reload
+```
+Open your web browser and navigate to `http://localhost:8000` to access the endpoint.
 
 ## Features
 
@@ -65,10 +73,6 @@ We welcome contributions to the PubMed AI Research Assistant. To contribute:
 ## License
 
 This project is licensed under the GNU General Public License v3.0. See the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-For questions or support, please contact [your-email@example.com].
 
 ### Code References
 
