@@ -9,41 +9,41 @@ def main():
     db_manager = DatabaseManager()
     
     print("===  Literature Review Assistant (LRA) ===")
-    print("(Escribe 'salir' para terminar)")
+    print("(Write 'exit' to finish)")
     
     while True:
         # Obtener pregunta del usuario
-        question = input("\nIntroduce tu pregunta sobre literatura:\n> ")
+        question = input("\nIntroduce your question about literature:\n> ")
         
-        if question.lower() == 'salir':
-            print("\n¡Hasta luego!")
+        if question.lower() == 'exit':
+            print("\n¡Goodbye!")
             break
             
         try:
-            print("\nBuscando información...")
+            print("\nSearching for information...")
             
             # Generar consulta optimizada para PubMed
             pubmed_query = model_manager.generate_advanced_query(question)
             
-            print(f"Consulta optimizada: {pubmed_query}")
+            print(f"Optimized query: {pubmed_query}")
 
             # Obtener artículos de PubMed
             articles = pubmed_retriever.fetch_articles(pubmed_query)
             
-            print(f"Artículos encontrados: {len(articles)}")
+            print(f"Articles found: {len(articles)}")
             # Procesar los artículos
             embedding_processor.process_abstracts(articles)
             
-            print("Procesando artículos...")
+            print("Processing articles...")
             
             # Obtener documentos relevantes
             relevant_docs = embedding_processor.retrieve_relevant_docs(question)
             
-            print(f"Documentos relevantes encontrados: {len(relevant_docs)}")
+            print(f"Relevant documents found: {len(relevant_docs)}")
             print(relevant_docs)
             
             if not relevant_docs:
-                print("No se encontraron artículos relevantes.")
+                print("No articles found.")
                 continue
             
             # Crear contexto
@@ -52,22 +52,22 @@ def main():
                 context.append(
                     f"- {doc['title']}\n  Abstract: {doc['abstract']}"
                 )
-            print("Generando respuesta...")
+            print("Generating response...")
             
             # Generar respuesta
             response = model_manager.generate_response(question, context)
             
-            print("Mostrando resultados...")
+            print("Showing results...")
 
             # Mostrar resultados
-            print("\nRespuesta:")
+            print("\nResponse:")
             print(response)
-            print("\nFuentes:")
+            print("\nSources:")
 
             for doc in relevant_docs:
                 print(f"- {doc['title']}\n")
 
-            print("Guardando en base de datos...")
+            print("Saving to database...")
             
             # Guardar en base de datos
             db_manager.save_to_db(question, response, context)            
