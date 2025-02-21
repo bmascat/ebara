@@ -8,12 +8,12 @@ def main():
     embedding_processor = EmbeddingProcessor()
     db_manager = DatabaseManager()
     
-    print("=== PubMed AI Research Assistant ===")
+    print("===  Literature Review Assistant (LRA) ===")
     print("(Escribe 'salir' para terminar)")
     
     while True:
         # Obtener pregunta del usuario
-        question = input("\nIntroduce tu pregunta sobre enfermedades, tratamientos o fármacos:\n> ")
+        question = input("\nIntroduce tu pregunta sobre literatura:\n> ")
         
         if question.lower() == 'salir':
             print("\n¡Hasta luego!")
@@ -40,6 +40,7 @@ def main():
             relevant_docs = embedding_processor.retrieve_relevant_docs(question)
             
             print(f"Documentos relevantes encontrados: {len(relevant_docs)}")
+            print(relevant_docs)
             
             if not relevant_docs:
                 print("No se encontraron artículos relevantes.")
@@ -49,27 +50,27 @@ def main():
             context = []
             for doc in relevant_docs:
                 context.append(
-                    f"- {doc['title']} (DOI: {doc['doi']})\n  Abstract: {doc['abstract']}"
+                    f"- {doc['title']}\n  Abstract: {doc['abstract']}"
                 )
-            
             print("Generando respuesta...")
             
             # Generar respuesta
             response = model_manager.generate_response(question, context)
             
-            print("Guardando en base de datos...")
-            
-            # Guardar en base de datos
-            db_manager.save_to_db(question, response, context)
-            
             print("Mostrando resultados...")
-            
+
             # Mostrar resultados
             print("\nRespuesta:")
             print(response)
             print("\nFuentes:")
+
             for doc in relevant_docs:
-                print(f"- DOI: {doc['doi']}")
+                print(f"- {doc['title']}\n")
+
+            print("Guardando en base de datos...")
+            
+            # Guardar en base de datos
+            db_manager.save_to_db(question, response, context)            
                 
         except Exception as e:
             print(f"\nError: {str(e)}")
