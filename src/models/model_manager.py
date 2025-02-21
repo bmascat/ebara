@@ -1,20 +1,20 @@
 from .connectors import LLMConnectorFactory
 
 class ModelManager:
-    """Gestor de modelos que soporta múltiples conectores de LLM"""
+    """Model manager that supports multiple LLM connectors"""
     
     def __init__(self, connector_type: str = "ollama", **kwargs):
         """
-        Inicializa el ModelManager con el conector especificado
+        Initializes the ModelManager with the specified connector
         
         Args:
-            connector_type: String que indica el conector a usar ("huggingface", "ollama", "openai")
-            **kwargs: Argumentos adicionales para el conector específico
+            connector_type: String indicating the connector to use ("huggingface", "ollama", "openai")
+            **kwargs: Additional arguments for the specific connector
         """
         self.llm = LLMConnectorFactory.get_connector(connector_type, **kwargs)
     
     def generate_advanced_query(self, user_question: str) -> str:
-        """Convierte la pregunta del usuario en una consulta avanzada de PubMed."""
+        """Converts the user question into an advanced PubMed search query."""
         prompt = f"""Convert the following user question into a GraphQL search query in english that can be used in an API call.
                     The output must be in plain text, without any formatting symbols like triple backticks, code blocks, or explanations.
 
@@ -41,7 +41,7 @@ class ModelManager:
         return self.llm.generate_text(prompt)
 
     def generate_response(self, query: str, context: list) -> str:
-        """Genera una respuesta basada en los fragmentos recuperados."""
+        """Generates a response based on the retrieved fragments."""
         final_prompt = f"""Using the following information: {context} 
                       together with the data you have from your previous training, answer the following question: {query}
                       Please answer the question in spanish and in a way that is easy to understand.

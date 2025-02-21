@@ -4,8 +4,8 @@ from .base_retriever import BaseRetriever
 
 class EuropePMCRetriever(BaseRetriever):
     """
-    Retriever para la base de datos Europe PMC.
-    Utiliza la API REST de Europe PMC.
+    Retriever for the Europe PMC database.
+    Uses the Europe PMC REST API.
     """
 
     BASE_URL = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
@@ -15,13 +15,13 @@ class EuropePMCRetriever(BaseRetriever):
 
     def fetch_articles(self, query: str) -> List[str]:
         """
-        Obtiene los primeros 'max_results' artículos de Europe PMC según la consulta.
+        Obtains the first 'max_results' articles from Europe PMC according to the query.
         
         Args:
-            query (str): Query de búsqueda
+            query (str): Search query
             
         Returns:
-            List[str]: Lista de abstracts de los artículos
+            List[str]: List of abstracts of the articles
         """
         params = {
             'query': query,

@@ -4,19 +4,19 @@ from .OllamaConnector import OllamaConnector
 from .OpenAIConnector import OpenAIConnector
 
 class LLMConnectorFactory:
-    """Fábrica de conectores LLM"""
+    """LLM Connector Factory"""
     
     @staticmethod
     def get_connector(connector_type: str, **kwargs) -> LLMConnector:
         """
-        Crea y retorna una instancia del conector especificado
+        Creates and returns an instance of the specified connector
         
         Args:
-            connector_type: Tipo de conector ("huggingface", "ollama", "openai")
-            **kwargs: Argumentos específicos para el conector
+            connector_type: Connector type ("huggingface", "ollama", "openai")
+            **kwargs: Specific arguments for the connector
         
         Returns:
-            LLMConnector: Instancia del conector solicitado
+            LLMConnector: Instance of the requested connector
         """
         connectors = {
             "huggingface": HuggingFaceConnector,
@@ -25,6 +25,6 @@ class LLMConnectorFactory:
         }
         
         if connector_type not in connectors:
-            raise ValueError(f"Conector no soportado. Opciones válidas: {list(connectors.keys())}")
+            raise ValueError(f"Unsupported connector. Valid options: {list(connectors.keys())}")
             
         return connectors[connector_type](**kwargs)

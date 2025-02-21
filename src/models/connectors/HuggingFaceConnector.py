@@ -3,7 +3,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import torch
 
 class HuggingFaceConnector(LLMConnector):
-    """Conector para modelos de Hugging Face"""
+    """Hugging Face Connector for models"""
     
     def __init__(self, model_name: str = "mistralai/Mistral-7B-Instruct-v0.2"):
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
