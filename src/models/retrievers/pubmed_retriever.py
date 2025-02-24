@@ -8,7 +8,7 @@ class PubMedRetriever(BaseRetriever):
     Uses PyMed to connect to the PubMed API.
     """
 
-    def __init__(self, max_results: int = 20):
+    def __init__(self, max_results: int = 15):
         super().__init__(max_results)
         self.pubmed = PubMed()
 

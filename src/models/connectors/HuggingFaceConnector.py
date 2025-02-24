@@ -5,10 +5,10 @@ import torch
 class HuggingFaceConnector(LLMConnector):
     """Hugging Face Connector for models"""
     
-    def __init__(self, model_name: str = "mistralai/Mistral-7B-Instruct-v0.2"):
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+    def __init__(self, model: str = "mistralai/Mistral-7B-Instruct-v0.2"):
+        self.tokenizer = AutoTokenizer.from_pretrained(model)
         self.model = AutoModelForCausalLM.from_pretrained(
-            model_name,
+            model,
             torch_dtype=torch.float16,
             device_map="auto"
         )
