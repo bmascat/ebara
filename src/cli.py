@@ -2,7 +2,7 @@ from models import ModelManager, EmbeddingProcessor, DatabaseManager
 from models.retrievers import PubMedRetriever
 
 def main():
-    # Inicializar componentes
+    # Initialize components
     model_manager = ModelManager(connector_type="ollama", model_name="llama3.2",)
     pubmed_retriever = PubMedRetriever()
     embedding_processor = EmbeddingProcessor()
@@ -12,7 +12,7 @@ def main():
     print("(Write 'exit' to finish)")
     
     while True:
-        # Obtener pregunta del usuario
+        # Get user question
         question = input("\nIntroduce your question about literature:\n> ")
         
         if question.lower() == 'exit':
@@ -22,54 +22,52 @@ def main():
         try:
             print("\nSearching for information...")
             
-            # Generar consulta optimizada para PubMed
+            # Generate optimized query for PubMed
             pubmed_query = model_manager.generate_advanced_query(question)
             
             print(f"Optimized query: {pubmed_query}")
 
-            # Obtener artículos de PubMed
+            # Get articles from PubMed
             articles = pubmed_retriever.fetch_articles(pubmed_query)
             
             print(f"Articles found: {len(articles)}")
-            # Procesar los artículos
+
+            if not articles:
+                print("No articles found.")
+                continue
+            
+            # Process articles
             embedding_processor.process_abstracts(articles)
             
             print("Processing articles...")
             
-            # Obtener documentos relevantes
+            # Get relevant documents
             relevant_docs = embedding_processor.retrieve_relevant_docs(question)
             
-            print(f"Relevant documents found: {len(relevant_docs)}")
-            print(relevant_docs)
+            print(f"Relevant documents found: {len(relevant_docs)}")            
             
             if not relevant_docs:
                 print("No articles found.")
                 continue
             
-            # Crear contexto
-            context = []
-            for doc in relevant_docs:
-                context.append(
-                    f"- {doc['title']}\n  Abstract: {doc['abstract']}"
-                )
+            # Create context
+            # Convert context list to a structured JSON format
+            context = model_manager.structure_context(relevant_docs)
+
             print("Generating response...")
             
-            # Generar respuesta
+            # Generate response
             response = model_manager.generate_response(question, context)
             
             print("Showing results...")
 
-            # Mostrar resultados
+            # Show results
             print("\nResponse:")
             print(response)
-            print("\nSources:")
-
-            for doc in relevant_docs:
-                print(f"- {doc['title']}\n")
 
             print("Saving to database...")
             
-            # Guardar en base de datos
+            # Save to database
             db_manager.save_to_db(question, response, context)            
                 
         except Exception as e:

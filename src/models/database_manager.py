@@ -20,7 +20,9 @@ class DatabaseManager:
     
     def save_to_db(self, query: str, response: str, context: list):
         """Saves the query, response and context in SQLite."""
+        # Convert each dictionary in context to a string
+        context_str = "\n".join([f"Title: {item['title']}, Abstract: {item['abstract']}" for item in context])
         cursor = self.conn.cursor()
         cursor.execute("INSERT INTO responses (query, response, context) VALUES (?, ?, ?)",
-                       (query, response, "\n".join(context)))
+                       (query, response, context_str))
         self.conn.commit()
