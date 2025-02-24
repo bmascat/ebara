@@ -21,15 +21,15 @@ class ModelManager:
                     Follow the format of the examples below:
 
                     Example 1:
-                    User question: "Buscar artículos sobre cáncer de pulmón publicados después de 2020"
+                    User question: "Search articles about lung cancer published after 2020"
                     Query: ("2020/01/01"[Date - Create] : "3000"[Date - Create]) AND ("lung cancer"[Title])
 
                     Example 2:
-                    User question: "Cómo los estudios sobre la enfermedad de Alzheimer de John Doe"
+                    User question: "How are the studies about the Alzheimer's disease of John Doe"
                     Query: ("John Doe"[Author]) AND ("Alzheimer's disease"[Title])
 
                     Example 3:
-                    User question: "¿Cuáles son los últimos tratamientos para la diabetes?"
+                    User question: "What are the latest treatments for diabetes?"
                     Query: ("diabetes"[Title]) AND ("treatment"[Title]) AND ("2023/01/01"[Date - Create] : "3000"[Date - Create])
 
                     Now, convert the following user question using the same format:
@@ -56,10 +56,11 @@ class ModelManager:
         {structured_context}
         
         Instructions:
-        - Answer in Spanish in a clear and understandable manner.
+        - Answer in english in a clear and understandable manner.
         - Use only the information provided in the context.
         - Include citations in the text indicating from which abstract the information was taken.
-        - At the end of the response, provide a bibliography with the titles of the abstracts used.
+        - At the end of the response, provide a bibliography with the titles of the abstracts used in the same order as they appear in the context.
+        - Titles are in the provided information json with the key "title".
         - Do not invent information or references.
         """
         
