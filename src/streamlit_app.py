@@ -5,23 +5,23 @@ import requests
 
 st.title("Evidence-Based AI Research Assistant (EBARA)")
 
-question = st.text_input("Introduce tu pregunta sobre enfermedades, tratamientos o fármacos:")
+question = st.text_input("Introduce your question about diseases, treatments or pharmaceuticals:")
 
-if st.button("Buscar evidencia"):
+if st.button("Search evidence"):
     if question.strip() != "":
-        with st.spinner("Buscando evidencia y generando respuesta..."):
+        with st.spinner("Searching evidence and generating response..."):
             try:
                 response = requests.post("http://localhost:8000/query", json={"question": question})
                 if response.status_code == 200:
                     data = response.json()
-                    st.markdown("### Respuesta Generada:")
+                    st.markdown("### Generated Response:")
                     st.write(data["response"])
-                    st.markdown("### Referencias:")
+                    st.markdown("### References:")
                     for title in data["references"]:
                         st.write(f"- {title}")
                 else:
-                    st.error("Error en la consulta: " + response.text)
+                    st.error("Error in the query: " + response.text)
             except Exception as e:
-                st.error("Error al conectar con el servidor: " + str(e))
+                st.error("Error connecting to the server: " + str(e))
     else:
-        st.warning("Por favor, ingresa una pregunta.")
+        st.warning("Please, enter a question.")
