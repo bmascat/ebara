@@ -2,7 +2,7 @@ import sqlite3
 
 class DatabaseManager:
     def __init__(self, db_name="rag_responses.db"):
-        self.conn = sqlite3.connect(db_name)
+        self.conn = sqlite3.connect(db_name, check_same_thread=False)
         self.create_table()
     
     def create_table(self):

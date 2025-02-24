@@ -1,18 +1,18 @@
-# Literature Review Assistant (LRA)
+# Evidence-Based AI Research Assistant (EBARA)
 
 ## Introduction
 
-The Literature Review Assistant (LRA) is a tool designed to assist researchers and healthcare professionals in retrieving and analyzing scientific articles from PubMed. It leverages advanced language models to generate optimized search queries and provide evidence-based responses to user queries about diseases, treatments, and pharmaceuticals.
+The Evidence-Based AI Research Assistant (EBARA) is a tool designed to assist researchers and healthcare professionals in retrieving and analyzing scientific articles from PubMed. It leverages advanced language models to generate optimized search queries and provide evidence-based responses to user queries about diseases, treatments, and pharmaceuticals.
 
 ## Installation
 
-To install the Literature Review Assistant (LRA), follow these steps:
+To install the Evidence-Based AI Research Assistant (EBARA), follow these steps:
 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/literature-review-assistant.git
-   cd lit-review-assistant
+   git clone https://github.com/yourusername/ebara.git
+   cd ebara
    ```
 
 2. **Install the required dependencies:**
