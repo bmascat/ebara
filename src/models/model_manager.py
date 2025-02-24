@@ -48,7 +48,7 @@ class ModelManager:
         """Generates a response based on the retrieved fragments."""
             
         structured_context = self.structure_context(context)
-        
+
         final_prompt = f"""
         Using the following information, answer the question: {query}
         
@@ -56,11 +56,13 @@ class ModelManager:
         {structured_context}
         
         Instructions:
-        - Answer in english in a clear and understandable manner.
+        - Answer in English in a clear and understandable manner.
         - Use only the information provided in the context.
+        - Use all the references provided in the context to answer the question.
         - Include citations in the text indicating from which abstract the information was taken.
+        - If an abstract is cited multiple times, use the same reference number for each citation.
         - At the end of the response, provide a bibliography with the titles of the abstracts used in the same order as they appear in the context.
-        - Titles are in the provided information json with the key "title".
+        - Titles are in the provided information JSON with the key "title".
         - Do not invent information or references.
         """
         

@@ -58,7 +58,7 @@ async def handle_query(query: QueryRequest):
         # Create a formatted context with the complete information of each article
         logger.info("Creating formatted context.")
         context = model_manager.structure_context(relevant_docs)
-        
+        logger.info(f"Context: {context}")
         # Generate the response using the ModelManager method
         logger.info("Generating the response.")
         response_text = model_manager.generate_response(query.question, context)
