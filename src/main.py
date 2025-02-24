@@ -2,59 +2,79 @@
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-from src.models import ModelManager, EmbeddingProcessor, PubMedRetriever, DatabaseManager
-from fastapi.concurrency import run_in_threadpool
+from src.models import ModelManager, EmbeddingProcessor, DatabaseManager
+from src.models.retrievers import PubMedRetriever
+import logging
 
 app = FastAPI()
 
+# Configurar el logger
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 class QueryRequest(BaseModel):
-    question: str = Field(..., min_length=5, max_length=500, description="La pregunta debe tener entre 5 y 500 caracteres")
+    question: str = Field(..., min_length=5, max_length=500, description="Question must be between 5 and 500 characters")
 
 @app.post("/query")
 async def handle_query(query: QueryRequest):
     try:
-        # Calcular embedding en un thread separado
-        # Inicializar los componentes necesarios
-        model_manager = ModelManager(connector_type="ollama", model_name="deepseek-R1")
+        logger.info("Starting query handling.")
+        
+        # Initialize the necessary components
+        logger.info("Initializing ModelManager, EmbeddingProcessor and PubMedRetriever.")
+        model_manager = ModelManager(connector_type="ollama", model_name="llama3.2")
         embedding_processor = EmbeddingProcessor()
         pubmed_retriever = PubMedRetriever()
         
-        # Generar consulta optimizada para PubMed
-        pubmed_query = await run_in_threadpool(model_manager.generate_advanced_query, query.question)
+        # Generate optimized query for PubMed
+        logger.info(f"Question: {query.question}")
+        logger.info("Generating optimized query for PubMed.")
+        pubmed_query = model_manager.generate_advanced_query(query.question)
+        logger.info(f"Optimized query: {pubmed_query}")
+
+        # Fetch articles from PubMed
+        logger.info("Fetching articles from PubMed.")
+        articles = pubmed_retriever.fetch_articles(pubmed_query)
         
-        # Obtener artículos de PubMed
-        articles = await run_in_threadpool(pubmed_retriever.fetch_articles, pubmed_query)
+        if not articles:
+            logger.warning("No articles found. Try again with a different question.")
+            raise HTTPException(status_code=404, detail="No articles found. Try again with a different question.")
         
-        # Procesar los artículos con el embedding processor
-        await run_in_threadpool(embedding_processor.process_abstracts, articles)
+        logger.info(f"Articles found: {len(articles)}")
+        # Process the articles with the embedding processor
+        logger.info("Processing articles with the EmbeddingProcessor.")
+        embedding_processor.process_abstracts(articles)
         
-        # Obtener chunks relevantes
-        relevant_docs = await run_in_threadpool(
-            embedding_processor.retrieve_relevant_docs, 
-            query.question
-        )
+        # Fetch relevant documents
+        logger.info("Fetching relevant documents.")
+        relevant_docs = embedding_processor.retrieve_relevant_docs(query.question)
         
         if not relevant_docs:
-            raise HTTPException(status_code=404, detail="No se encontraron artículos relevantes.")
+            logger.warning("No relevant documents found. Try again with a different question.")
+            raise HTTPException(status_code=404, detail="No relevant documents found. Try again with a different question.")
+
+        logger.info(f"Relevant documents found: {len(relevant_docs)}")
+
+        # Create a formatted context with the complete information of each article
+        logger.info("Creating formatted context.")
+        context = model_manager.structure_context(relevant_docs)
         
-        # Crear un contexto formateado con la información completa de cada artículo
-        context = []
-        for doc in relevant_docs:
-            context.append(
-                f"""- {doc['title']} (DOI: {doc['doi']})
-                      Abstract: {doc['abstract']}"""
-            )
+        # Generate the response using the ModelManager method
+        logger.info("Generating the response.")
+        response_text = model_manager.generate_response(query.question, context)
         
-        # Generar la respuesta utilizando el método del ModelManager
-        # Se asume que generate_response recibe la pregunta y el contexto (lista de strings)
-        response_text = await run_in_threadpool(model_manager.generate_response, query.question, context)
-        
-        # Registrar la consulta en la base de datos utilizando DatabaseManager
+        # Register the query in the database using DatabaseManager
+        logger.info("Registering the query in the database.")
         db_manager = DatabaseManager()
         db_manager.create_table()
-
-        await run_in_threadpool(db_manager.save_to_db, query.question, response_text, context)
+        db_manager.save_to_db(query.question, response_text, context)
     
-        return {"response": response_text, "references": [doc['doi'] for doc in relevant_docs]}
+        logger.info("Query handled successfully.")
+        return {"response": response_text, "references": [doc['title'] for doc in relevant_docs]}
+    
+    except HTTPException as e:
+        logger.error(f"Error handling the query: {str(e)}")
+        raise e
     except Exception as e:
+        logger.error(f"Error handling the query: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))

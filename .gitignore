@@ -174,4 +174,4 @@ cython_debug/
 .pypirc
 
 # Ignore db file
-src/models/rag_responses.db
+rag_responses.db

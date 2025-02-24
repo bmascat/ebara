@@ -3,7 +3,7 @@
 import streamlit as st
 import requests
 
-st.title("PubMed Evidence-Based AI Research Assistant (PEBARA)")
+st.title("Evidence-Based AI Research Assistant (EBARA)")
 
 question = st.text_input("Introduce tu pregunta sobre enfermedades, tratamientos o fármacos:")
 
@@ -17,8 +17,8 @@ if st.button("Buscar evidencia"):
                     st.markdown("### Respuesta Generada:")
                     st.write(data["response"])
                     st.markdown("### Referencias:")
-                    for doi in data["references"]:
-                        st.write(f"- {doi}")
+                    for title in data["references"]:
+                        st.write(f"- {title}")
                 else:
                     st.error("Error en la consulta: " + response.text)
             except Exception as e:
