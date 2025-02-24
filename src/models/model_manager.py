@@ -39,11 +39,28 @@ class ModelManager:
                      """
         
         return self.llm.generate_text(prompt)
+    
+    def structure_context(self, context: list) -> str:
+        """Converts the context list to a structured JSON format."""
+        return [{"title": item['title'], "abstract": item['abstract']} for item in context]
 
     def generate_response(self, query: str, context: list) -> str:
         """Generates a response based on the retrieved fragments."""
-        final_prompt = f"""Using the following information: {context} 
-                      together with the data you have from your previous training, answer the following question: {query}
-                      Please answer the question in spanish and in a way that is easy to understand.
-                      """
+            
+        structured_context = self.structure_context(context)
+        
+        final_prompt = f"""
+        Using the following information, answer the question: {query}
+        
+        Provided information:
+        {structured_context}
+        
+        Instructions:
+        - Answer in Spanish in a clear and understandable manner.
+        - Use only the information provided in the context.
+        - Include citations in the text indicating from which abstract the information was taken.
+        - At the end of the response, provide a bibliography with the titles of the abstracts used.
+        - Do not invent information or references.
+        """
+        
         return self.llm.generate_text(final_prompt)
