@@ -8,7 +8,7 @@ def main():
     embedding_processor = EmbeddingProcessor()
     db_manager = DatabaseManager()
     
-    print("===  Literature Review Assistant (LRA) ===")
+    print("===  Evidence-Based AI Research Assistant (EBARA) ===")
     print("(Write 'exit' to finish)")
     
     while True:

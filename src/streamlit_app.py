@@ -5,7 +5,7 @@ import requests
 
 st.title("Evidence-Based AI Research Assistant (EBARA)")
 
-question = st.text_input("Introduce your question about diseases, treatments or pharmaceuticals:")
+question = st.text_input("Introduce your question about diseases, treatments or pharmaceuticals:", value="Search articles about lung cancer published after 2020")
 
 if st.button("Search evidence"):
     if question.strip() != "":
