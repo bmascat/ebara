@@ -21,16 +21,24 @@ class ModelManager:
                     Follow the format of the examples below:
 
                     Example 1:
-                    User question: "Search articles about lung cancer published after 2020"
-                    Query: ("2020/01/01"[Date - Create] : "3000"[Date - Create]) AND ("lung cancer"[Title])
+                    User question: "What is the recommended dosage of ibuprofen for adult patients, and what are its common side effects?"
+                    Query: ("Ibuprofen"[Title/Abstract] OR "Ibuprofen"[MeSH]) AND ("Dosage"[Title/Abstract] OR "Administration & Dosage"[MeSH]) 
+                    AND ("Side Effects"[Title/Abstract] OR "Adverse Effects"[MeSH] OR "Toxicity"[MeSH]) 
+                    AND ("Adult"[MeSH] OR "Adults"[Title/Abstract])
 
                     Example 2:
-                    User question: "How are the studies about the Alzheimer's disease of John Doe"
-                    Query: ("John Doe"[Author]) AND ("Alzheimer's disease"[Title])
+                    User question: "Is metformin effective in reducing cardiovascular risk in patients with type 2 diabetes?"
+                    Query: ("Metformin"[Title/Abstract] OR "Metformin"[MeSH]) 
+                    AND ("Cardiovascular Diseases"[MeSH] OR "Cardiovascular Risk"[Title/Abstract]) 
+                    AND ("Type 2 Diabetes Mellitus"[MeSH] OR "T2DM"[Title/Abstract]) 
+                    AND ("Effectiveness"[Title/Abstract] OR "Efficacy"[Title/Abstract] OR "Clinical Trials as Topic"[MeSH])
 
                     Example 3:
-                    User question: "What are the latest treatments for diabetes?"
-                    Query: ("diabetes"[Title]) AND ("treatment"[Title]) AND ("2023/01/01"[Date - Create] : "3000"[Date - Create])
+                    User question: "What are the latest diagnostic criteria for Marfan syndrome?"
+                    Query: ("Marfan Syndrome"[MeSH] OR "Marfan Syndrome"[Title/Abstract]) 
+                    AND ("Diagnosis"[MeSH] OR "Diagnostic Criteria"[Title/Abstract]) 
+                    AND ("Guidelines as Topic"[MeSH] OR "Consensus"[Title/Abstract]) 
+                    AND ("2023"[PDAT] OR "2024"[PDAT])
 
                     Now, convert the following user question using the same format:
 

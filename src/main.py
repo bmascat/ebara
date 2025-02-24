@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from src.models import ModelManager, EmbeddingProcessor, DatabaseManager
 from src.models.retrievers import PubMedRetriever
-import logging
+import logging, os
 
 app = FastAPI()
 
@@ -19,10 +19,12 @@ class QueryRequest(BaseModel):
 async def handle_query(query: QueryRequest):
     try:
         logger.info("Starting query handling.")
-        
+        api_key = os.environ.get("OPENAI_API_KEY")
         # Initialize the necessary components
         logger.info("Initializing ModelManager, EmbeddingProcessor and PubMedRetriever.")
-        model_manager = ModelManager(connector_type="ollama", model_name="llama3.2")
+        # model_manager = ModelManager(connector_type="ollama", model_name="llama3.2")
+        model_manager = ModelManager(connector_type="openai", api_key=api_key, model="gpt-4o-mini")
+
         embedding_processor = EmbeddingProcessor()
         pubmed_retriever = PubMedRetriever()
         
