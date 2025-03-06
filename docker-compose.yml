@@ -19,4 +19,4 @@ services:
     depends_on:
       - backend 
     environment:
-      - BACKEND_URL=${BACKEND_URL}
+      - BACKEND_URL=http://backend:8000
