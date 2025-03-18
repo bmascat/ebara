@@ -41,7 +41,7 @@ jobs:
           --region ${{ secrets.GCP_REGION }} \
           --allow-unauthenticated \
           --set-env-vars OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
-
+          
     - name: Deploy frontend to Cloud Run
       run: |
         gcloud run deploy ebara-frontend \
