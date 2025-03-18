@@ -5,11 +5,11 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Copia los archivos de requerimientos y el código fuente
-COPY requirements.txt /app/
-COPY src /app/src
+COPY requirements-front.txt /app/
+COPY src/streamlit_app.py /app/src/
 
 # Instala las dependencias
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements-front.txt
 
 # Expone el puerto en el que correrá Streamlit
 EXPOSE 8501
