@@ -1,0 +1,52 @@
+name: Deploy to Google Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        version: 'latest'
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker
+
+    - name: Build and push backend image
+      run: |
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/ebara-backend -f Dockerfile.backend .
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/ebara-backend
+
+    - name: Build and push frontend image
+      run: |
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/ebara-frontend -f Dockerfile.frontend .
+        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/ebara-frontend
+
+    - name: Deploy backend to Cloud Run
+      run: |
+        gcloud run deploy ebara-backend \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/ebara-backend \
+          --platform managed \
+          --region ${{ secrets.GCP_REGION }} \
+          --allow-unauthenticated \
+          --set-env-vars OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+
+    # - name: Deploy frontend to Cloud Run
+    #   run: |
+    #     gcloud run deploy ebara-frontend \
+    #       --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/ebara-frontend \
+    #       --platform managed \
+    #       --region ${{ secrets.GCP_REGION }} \
+    #       --allow-unauthenticated \
+    #       --set-env-vars BACKEND_URL=${{ secrets.BACKEND_URL }}
