@@ -42,11 +42,11 @@ jobs:
           --allow-unauthenticated \
           --set-env-vars OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
 
-    # - name: Deploy frontend to Cloud Run
-    #   run: |
-    #     gcloud run deploy ebara-frontend \
-    #       --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/ebara-frontend \
-    #       --platform managed \
-    #       --region ${{ secrets.GCP_REGION }} \
-    #       --allow-unauthenticated \
-    #       --set-env-vars BACKEND_URL=${{ secrets.BACKEND_URL }}
+    - name: Deploy frontend to Cloud Run
+      run: |
+        gcloud run deploy ebara-frontend \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/ebara-frontend \
+          --platform managed \
+          --region ${{ secrets.GCP_REGION }} \
+          --allow-unauthenticated \
+          --set-env-vars BACKEND_URL=${{ secrets.BACKEND_URL }}
