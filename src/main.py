@@ -2,7 +2,7 @@
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-from src.models import ModelManager, EmbeddingProcessor, DatabaseManager
+from src.models import ModelManager, OpenAIEmbeddingProcessor, DatabaseManager
 from src.models.retrievers import PubMedRetriever
 import logging, os
 
@@ -25,7 +25,7 @@ async def handle_query(query: QueryRequest):
         # model_manager = ModelManager(connector_type="ollama", model_name="llama3.2")
         model_manager = ModelManager(connector_type="openai", api_key=api_key, model="gpt-4o-mini")
 
-        embedding_processor = EmbeddingProcessor()
+        embedding_processor = OpenAIEmbeddingProcessor()
         pubmed_retriever = PubMedRetriever()
         
         # Generate optimized query for PubMed
