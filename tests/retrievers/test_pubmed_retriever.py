@@ -72,5 +72,5 @@ def test_real_pubmed_api_call():
     assert all(isinstance(result['abstract'], str) for result in results)
     assert all(len(result['abstract']) > 0 for result in results)
     
-    # Imprimir primer resultado para inspección manual
-    print(f"\nPrimer articulo encontrado:\n{results[0]}...")
+    # First result for manual inspection
+    print(f"\nFirst article found:\n{results[0]}...")
