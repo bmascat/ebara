@@ -2,21 +2,17 @@ version: '3.8'
 
 services:
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
+    image: bmascat/ebara-backend:latest
     ports:
       - "8000:8000"
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
 
   frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
+    image: bmascat/ebara-frontend:latest
     ports:
       - "8501:8501"
     depends_on:
       - backend 
     environment:
-      - BACKEND_URL=http://backend:8000
+      - BACKEND_URL=http://backend-1:8000
