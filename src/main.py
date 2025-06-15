@@ -19,11 +19,11 @@ class QueryRequest(BaseModel):
 async def handle_query(query: QueryRequest):
     try:
         logger.info("Starting query handling.")
-        api_key = os.environ.get("OPENAI_API_KEY")
+        # api_key = os.environ.get("OPENAI_API_KEY")
         # Initialize the necessary components
         logger.info("Initializing ModelManager, EmbeddingProcessor and PubMedRetriever.")
-        # model_manager = ModelManager(connector_type="ollama", model_name="llama3.2")
-        model_manager = ModelManager(connector_type="openai", api_key=api_key, model="gpt-4o-mini")
+        model_manager = ModelManager(connector_type="ollama", model_name="llama3.2")
+        # model_manager = ModelManager(connector_type="openai", api_key=api_key, model="gpt-4o-mini")
 
         embedding_processor = EmbeddingProcessor()
         pubmed_retriever = PubMedRetriever()
