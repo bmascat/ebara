@@ -33,17 +33,17 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHDG_TOKEN }}
+          password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Extract metadata (tags) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ github.repository }}-backend
-            ghcr.io/${{ github.repository }}-backend
-            ${{ github.repository }}-frontend
-            ghcr.io/${{ github.repository }}-frontend
+            ${{ env.DOCKER_HUB_REPOSITORY }}-backend
+            ghcr.io/${{ env.GITHUB_REPOSITORY }}-backend
+            ${{ env.DOCKER_HUB_REPOSITORY }}-frontend
+            ghcr.io/${{ env.GITHUB_REPOSITORY }}-frontend
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
             type=semver,pattern={{version}}

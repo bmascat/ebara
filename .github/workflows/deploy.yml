@@ -1,7 +1,7 @@
 name: Deploy to Google Cloud Run
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -13,13 +13,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
       with:
         version: 'latest'
         project_id: ${{ secrets.GCP_PROJECT_ID }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
 
     - name: Configure Docker
       run: gcloud auth configure-docker
