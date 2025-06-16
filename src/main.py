@@ -39,8 +39,15 @@ async def handle_query(query: QueryRequest):
         articles = pubmed_retriever.fetch_articles(pubmed_query)
         
         if not articles:
-            logger.warning("No articles found. Try again with a different question.")
-            raise HTTPException(status_code=404, detail="No articles found. Try again with a different question.")
+            logger.warning("No articles found. Generating response without literature.")
+            response_text = model_manager.generate_response(
+
+                f"""No relevant articles found. 
+                However, based on the general knowledge available, I will answer the following:
+                
+                {query.question}""", []
+            )
+            return {"response": response_text, "references": []}
         
         logger.info(f"Articles found: {len(articles)}")
         # Process the articles with the embedding processor
@@ -50,10 +57,17 @@ async def handle_query(query: QueryRequest):
         # Fetch relevant documents
         logger.info("Fetching relevant documents.")
         relevant_docs = embedding_processor.retrieve_relevant_docs(query.question)
-        
+    
         if not relevant_docs:
-            logger.warning("No relevant documents found. Try again with a different question.")
-            raise HTTPException(status_code=404, detail="No relevant documents found. Try again with a different question.")
+            logger.warning("No relevant documents found. Generating response without literature.")
+            response_text = model_manager.generate_response(
+
+                f"""No relevant documents found. 
+                However, based on the general knowledge available, I will answer the following:
+                
+                {query.question}""", []
+            )
+            return {"response": response_text, "references": []}
 
         logger.info(f"Relevant documents found: {len(relevant_docs)}")
 
