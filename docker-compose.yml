@@ -7,6 +7,10 @@ services:
       - "8000:8000"
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - DOCKER_ENV=true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   frontend:
     image: bmascat/ebara-frontend:latest
