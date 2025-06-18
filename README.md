@@ -128,6 +128,7 @@ The EBARA project is built using a modern, open-source stack prioritizing perfor
 - MVP 3 (Streamlit Frontend) → 25 h
 - MVP 4 (Persistence & Auditing) → 10 h
 - MVP 5 (Containerised Deployment & Final QA) → 15 h
+
 ### Project Estimation:
 ![clockify](./images/clockify.jpg)
 
