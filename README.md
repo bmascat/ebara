@@ -121,6 +121,16 @@ The EBARA project is built using a modern, open-source stack prioritizing perfor
 ## Deployment workflow:
 ![deployment_workflow](./images/deployment_diagram.jpg)
 
+## Development process:
+
+- MVP 1 (Backend Endpoint & Modules development) → 35 h
+- MVP 2 (Embedding & FAISS Integration) → additional 20 
+- MVP 3 (Streamlit Frontend) → 25 h
+- MVP 4 (Persistence & Auditing) → 10 h
+- MVP 5 (Containerised Deployment & Final QA) → 15 h
+### Project Estimation:
+![clockify](./images/clockify.jpg)
+
 ## Installation
 
 To install the Evidence-Based AI Research Assistant (EBARA), follow these steps:
