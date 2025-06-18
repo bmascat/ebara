@@ -88,7 +88,7 @@ The EBARA project is built using a modern, open-source stack prioritizing perfor
 ### 🧱 Architecture & Design Patterns
 - **Clean Architecture**: Layered architecture for separation of concerns.
 - **Factory Pattern**: For dynamic LLM connector instantiation.
-- **Repository Pattern**: For clean separation between logic and data persistence.
+- **"Repository Pattern"**: For clean separation between logic and data persistence.
 - **SOLID Principles**:
   - Single Responsibility
   - Open/Closed
