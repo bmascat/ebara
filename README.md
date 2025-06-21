@@ -65,6 +65,81 @@ As a user, I want the application to be easy to use on any device so that I can 
    - Generate contextual responses using a Large Language Model (LLM).✅
    - Store queries, responses, and context information in a SQLite database for future reference and auditing.✅
 
+## 📁 Project Structure
+
+The project follows a modular architecture with the following structure:
+
+```text
+ebara/
+├── 📄 README.md                           # Main project documentation
+├── 📄 LICENSE                             # Project license
+├── 📄 requirements.txt                    # Main Python dependencies
+├── 📄 requirements-back.txt               # Backend dependencies
+├── 📄 requirements-front.txt              # Frontend dependencies
+├── 📄 docker-compose.yml                  # Docker Compose configuration
+├── 📄 Dockerfile.backend                  # Backend Dockerfile
+├── 📄 Dockerfile.frontend                 # Frontend Dockerfile
+├── 📄 ebara_specs.pdf                     # Project specifications
+├── 📄 .gitignore                          # Git ignored files
+│
+├── 📁 src/                                # Main source code
+│   ├── 📄 __init__.py
+│   ├── 📄 main.py                         # Main application entry point
+│   ├── 📄 cli.py                          # Command line interface
+│   ├── 📄 streamlit_app.py                # Streamlit application
+│   │
+│   └── 📁 models/                         # Models and business logic
+│       ├── 📄 __init__.py
+│       ├── 📄 database_manager.py         # Database manager
+│       ├── 📄 embedding_processor.py      # Embedding processor
+│       ├── 📄 openai_embedding_processor.py # OpenAI-specific processor
+│       ├── 📄 model_manager.py            # Model manager
+│       │
+│       ├── 📁 connectors/                 # LLM connectors
+│       │   ├── 📄 __init__.py
+│       │   ├── 📄 LLMConnector.py         # Base connector
+│       │   ├── 📄 LLMConnectorFactory.py  # Connector factory
+│       │   ├── 📄 OpenAIConnector.py      # OpenAI connector
+│       │   ├── 📄 OllamaConnector.py      # Ollama connector
+│       │   └── 📄 HuggingFaceConnector.py # HuggingFace connector
+│       │
+│       └── 📁 retrievers/                 # Information retrievers
+│           ├── 📄 __init__.py
+│           ├── 📄 base_retriever.py       # Base retriever
+│           ├── 📄 pubmed_retriever.py     # PubMed retriever
+│           └── 📄 europepmc_retriever.py  # Europe PMC retriever
+│
+├── 📁 tests/                              # Unit tests
+│   ├── 📄 __init__.py
+│   ├── 📄 conftest.py                     # Pytest configuration
+│   │
+│   ├── 📁 connectors/                     # Connector tests
+│   │   ├── 📄 test_openai_connector.py
+│   │   └── 📄 test_ollama_connector.py
+│   │
+│   └── 📁 retrievers/                     # Retriever tests
+│       ├── 📄 __init__.py
+│       ├── 📄 test_pubmed_retriever.py
+│       └── 📄 test_europepmc_retriever.py
+│
+├── 📁 images/                             # Images and diagrams
+│   ├── 📄 logo_ebara.png                  # Project logo
+│   ├── 📄 ebara_architecture.png          # Architecture diagram
+│   ├── 📄 components_diagram.png          # Components diagram
+│   ├── 📄 deployment_diagram.jpg          # Deployment diagram
+│   ├── 📄 gantt_diagram.jpg               # Gantt chart
+│   └── 📄 clockify.jpg                    # Clockify screenshot
+│
+├── 📁 .github/                            # GitHub configuration
+│   └── 📁 workflows/                      # GitHub Actions
+│       ├── 📄 docker-publish.yml          # Docker publish workflow
+│       └── 📄 deploy.yml                  # Deployment workflow
+│
+├── 📁 .vscode/                            # VS Code configuration
+├── 📁 env/                                # Virtual environment (Git ignored)
+└── 📁 .pytest_cache/                      # Pytest cache (Git ignored)
+```
+
 ## 🧱 Technical Architecture:
 
 ![ebara_architecture](./images/ebara_architecture.png)
