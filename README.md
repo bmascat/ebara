@@ -1,4 +1,10 @@
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org) 
+
 # Evidence-Based AI Research Assistant (EBARA)
+
+![ebara_logo](./images/logo_ebara.png)
+
+[Powerpoint explanation](https://docs.google.com/presentation/d/1DjgQbwFGI4-6zMwd0eVSLmJgir2hqG8rPKnK-8G0qDY/edit?usp=sharing)
 
 ## Introduction
 
@@ -104,7 +110,7 @@ The EBARA project is built using a modern, open-source stack prioritizing perfor
 ### 📋 Project & Documentation Tools
 - **Visual Studio Code**: IDEs for development.
 - **Markdown** + **Diagrams**: Technical documentation.
-- **Trello / Notion / OpenProject**: Task and time
+- **Clockify**: Task and time
 
 ## Components Diagram:
 ![components_diagram](./images/components_diagram.png)
@@ -122,14 +128,32 @@ The EBARA project is built using a modern, open-source stack prioritizing perfor
 
 ## Development process:
 
+The traceability of the development was managed with an iterative and incremental process with **comenvitonal commit** to identify the contribution made.
+
+Estimation ~ 10 hour/week (180 hours in total).
+
+![gantt_diagram](./images/gantt_diagram.jpg)
+
 - MVP 1 (Backend Endpoint & Modules development) → 35 h
 - MVP 2 (Embedding & FAISS Integration) → additional 20 
 - MVP 3 (Streamlit Frontend) → 25 h
 - MVP 4 (Persistence & Auditing) → 10 h
 - MVP 5 (Containerised Deployment & Final QA) → 15 h
 
-### Project Estimation:
+### Final project dedication: clockify
 ![clockify](./images/clockify.jpg)
+
+## Pre-requisites and pre-configuration:
+
+Use a PC with minimun of 16GBs of RAM and i5 processor. The use of GPU improves the fluidity and UX of the application.
+
+The application is pre-configured to work with the [**Ollama**](https://ollama.com/download) connector so it is recommended to download and install the application locally.
+
+After installation, the server must be set up to serve an LLM like llama3.2 for example.
+
+   ```bash
+   ollama run llama3.2
+   ```
 
 ## Installation
 
@@ -140,6 +164,26 @@ To install the Evidence-Based AI Research Assistant (EBARA), follow these steps:
    ```bash
    git clone https://github.com/yourusername/ebara.git
    cd ebara
+   ```
+   
+   **(OPTIONAL)** *Recomended for non technical users*:
+
+   After cloning the github repository install [docker desktop](https://www.docker.com/products/docker-desktop/) to get the application running using docker-compose
+   
+   Run the next command on the terminal:
+   
+   ```bash
+      docker-compose up
+   ```
+   This can take some minutes to setup, then go to `http://localhost:8501` to use de app.
+
+3. **Create a virtual environment:**
+
+   Establish a virtual environment for dependencies installation
+   ```bash
+   python -m venv env
+   
+   env\Scrypts\activate
    ```
 
 2. **Install the required dependencies:**
@@ -181,7 +225,7 @@ Open your web browser and navigate to `http://localhost:8000` to access the endp
 
 ## Contributing
 
-We welcome contributions to the PubMed AI Research Assistant. To contribute:
+We welcome contributions to the EBARA project. To contribute:
 
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix.
@@ -201,5 +245,25 @@ This project is licensed under the GNU General Public License v3.0. See the [LIC
 - Model Manager and Query Generation: `src/models/model_manager.py`
 - Embedding Processing: `src/models/embedding_processor.py`
 - Database Management: `src/models/database_manager.py`
+
+# References
+
+1.	Hugging Face Transformers. (n.d.). Retrieved from https://huggingface.co/docs/transformers/
+2.	FAISS Documentation. (n.d.). Retrieved from https://github.com/facebookresearch/faiss/wiki
+3.	PubMed Official Web Page (n.d.). Retrieved from https://pubmed.ncbi.nlm.nih.gov/
+4.	PyMed API Official Documentation. (n.d.). Retrieved from https://pypi.org/project/pymed/
+5.	PostgreSQL Official Documentation. (n.d.). Retrieved from https://www.postgresql.org/docs/
+6.	FastAPI Documentation. (n.d.). Retrieved from https://fastapi.tiangolo.com/
+7.	Streamlit Documentation. (n.d.). Retrieved from https://docs.streamlit.io/
+8.	SQLite Documentation. (n.d.). Retrieved from https://www.sqlite.org/docs.html
+9.	Docker Documentation. (n.d.). Retrieved from https://docs.docker.com/
+10.	OpenAI API Documentation. (n.d.). Retrieved from https://platform.openai.com/docs
+11.	Ollama Documentation. (n.d.). Retrieved from https://ollama.com/docs
+12.	FAISS Tutorial and Examples. (n.d.). Microsoft Azure. Retrieved from https://learn.microsoft.com/en-us/azure/architecture/example-scenario/ai/vector-search-faiss
+13.	Martin, R. C. (2012, August 13). The Clean Architecture. Retrieved from https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html
+14.	Pydantic Documentation. (n.d.). Retrieved from https://docs.pydantic.dev/
+15.	GitHub. (n.d.). Retrieved from https://github.com/
+16.	Stack Overflow. (n.d.). Retrieved from https://stackoverflow.com/
+17.	OpenAI. (n.d.). ChatGPT. Retrieved from https://chat.openai.com/
 
 This documentation provides a comprehensive overview of the software, including how to install, use, and contribute to it. Adjust the contact information and repository URL as needed.
