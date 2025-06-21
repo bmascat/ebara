@@ -243,14 +243,15 @@ To install the Evidence-Based AI Research Assistant (EBARA), follow these steps:
    
    **(OPTIONAL)** *Recomended for non technical users*:
 
-   After cloning the github repository install [docker desktop](https://www.docker.com/products/docker-desktop/) to get the application running using docker-compose
+   After cloning the github repositoskry install [docker desktop](https://www.docker.com/products/docker-desktop/) to get the application running using docker-compose
    
    Run the next command on the terminal:
    
    ```bash
       docker-compose up
    ```
-   This can take some minutes to setup, then go to `http://localhost:8501` to use de app.
+   This can take some minutes to setup, then go to `http://localhost:8501` to use de app. If you follow this option you can skip 
+   the rest of the installation process.
 
 3. **Create a virtual environment:**
 
